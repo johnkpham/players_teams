@@ -1,0 +1,31 @@
+<div ng-controller = 'AssociationsController'>
+	<form ng-submit = 'add()'>
+		<select ng-model = "newAssociation.player" ng-options = "player.name for player in players"></select>
+		<select ng-model = "newAssociation.team" ng-options = "team.name for team in teams"></select>
+		<input type = 'submit' value = 'Assign Player to Team'>
+	</form>
+	<table class = 'table table-bordered table-striped'>
+		<thead>
+			<tr>
+				<td>
+					<a href = '' ng-click = "sortType = 'player'; sortReverse = !sortReverse">Name</a>
+					<span ng-show = "sortType == 'player' && !sortReverse">v</span>
+					<span ng-show = "sortType == 'player' && sortReverse">^</span>
+				</td>
+				<td>
+					<a href = '' ng-click = "sortType = 'team'; sortReverse = !sortReverse">Team</a>
+					<span ng-show = "sortType == 'team' && !sortReverse">v</span>
+					<span ng-show = "sortType == 'team' && sortReverse">^</span>
+				</td>
+				<td>Actions</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat = 'association in associations | orderBy:sortType:sortReverse track by $index'>
+				<td ng-bind = "association.player.name"></td>
+				<td><a href = "#/{{association.team.name}}" ng-bind = "association.team.name"></a></td>
+				<td><button ng-click = 'remove(association)'>Clear Assignment</button></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
